@@ -1,0 +1,27 @@
+{
+    "name": "rodrigo/rinha-php",
+    "description": "Rinha Backend 2024 Q1",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rinha\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rodrigo Pires Meira"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^1.23"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require": {
+        "clue/framework-x": "dev-main",
+        "react/mysql": "^0.6.0"
+    }
+}
