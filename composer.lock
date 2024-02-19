@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec2bd5bde61b4d630cd353a8196ae86d",
+    "content-hash": "b9e45f54c1ffa96d48d53b096b65fcd4",
     "packages": [
         {
             "name": "clue/framework-x",

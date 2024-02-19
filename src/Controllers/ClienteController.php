@@ -27,9 +27,8 @@ class ClienteController
             )->withStatus(Response::STATUS_NOT_FOUND);
         }
 
-        $data = $cliente->nome;
-        return Response::plaintext(
-            $data
+        return Response::json(
+            $cliente
         );
     }
 }
