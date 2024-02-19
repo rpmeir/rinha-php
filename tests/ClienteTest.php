@@ -14,7 +14,12 @@ test('example', function () {
 // descricao deve ser uma string de 1 a 10 caractéres.
 // os tres campos sao obrigatorios
 
-// resposta deve ser { "limite" : 100000, "saldo" : 100000 }
+// resposta deve ser
+// {
+//     "limite" : 100000,
+//     "saldo" : 100000
+// }
+
 // limite deve ser o limite cadastrado do cliente.
 // saldo deve ser o novo saldo após a conclusão da transação.
 
