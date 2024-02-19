@@ -16,12 +16,10 @@ class ClienteController
         $this->repository = $repository;
     }
 
-
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $id = $request->getAttribute('id');
         $cliente = $this->repository->find($id);
-
 
         if ($cliente === null) {
             return Response::plaintext(
