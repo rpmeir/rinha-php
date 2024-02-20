@@ -29,14 +29,14 @@ classDiagram
 
 ```sql
 
-create table cliente (
+create table clientes (
    id int not null auto_increment,
    nome varchar(100) not null,
    primary key (id)
 );
 
 
-create table conta (
+create table contas (
    id int not null auto_increment,
    cliente_id int not null,
    limite bigint not null,
@@ -44,12 +44,12 @@ create table conta (
    primary key (id)
 );
 
-alter table conta add foreign key (cliente_id) references cliente(id);
+alter table contas add foreign key (cliente_id) references clientes(id);
 
-create index idx_conta on conta (cliente_id, limite, saldo);
+create index idx_conta on contas (cliente_id, limite, saldo);
 
 
-create table transacao (
+create table transacoes (
    id int not null auto_increment,
    conta_id int not null,
    valor bigint not null,
@@ -59,12 +59,12 @@ create table transacao (
    primary key (id)
 );
 
-alter table transacao add foreign key (conta_id) references conta(id);
+alter table transacoes add foreign key (conta_id) references contas(id);
 
-create index idx_transacao on transacao (conta_id, valor, tipo, descricao, realizada_em);
+create index idx_transacao on transacoes (conta_id, valor, tipo, descricao, realizada_em);
 
 
-insert into cliente (nome)
+insert into clientes (nome)
 values
 ('Milionario'),
 ('Jose Rico'),
@@ -72,7 +72,7 @@ values
 ('Pobrecito'),
 ('Gastao');
 
-insert into conta (cliente_id, limite, saldo)
+insert into contas (cliente_id, limite, saldo)
 values
 (1,   100000, 0),
 (2,    80000, 0),

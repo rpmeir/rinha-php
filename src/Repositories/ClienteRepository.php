@@ -5,7 +5,7 @@ namespace Rinha\Repositories;
 use React\MySQL\ConnectionInterface;
 use React\MySQL\QueryResult;
 use Rinha\Entities\Cliente;
-use function React\Async\await;
+use React\Promise\PromiseInterface;
 
 class ClienteRepository
 {
@@ -16,21 +16,21 @@ class ClienteRepository
         $this->db = $db;
     }
 
-    public function find(int $id): ?Cliente
+    /** @return PromiseInterface<?Cliente> **/
+    public function find(int $id): PromiseInterface
     {
-        $result = await($this->db->query(
-            'SELECT id, nome FROM cliente WHERE id = ?',
+        return $this->db->query(
+            'SELECT id, nome FROM clientes WHERE id = ?',
             [$id]
-        ));
-        assert($result instanceof QueryResult);
+        )->then(function (QueryResult $result) {
+            if (count($result->resultRows) === 0) {
+                return null;
+            }
 
-        if (count($result->resultRows) === 0) {
-            return null;
-        }
-
-        return new Cliente(
-            $result->resultRows[0]['id'],
-            $result->resultRows[0]['nome']
-        );
+            return new Cliente(
+                $result->resultRows[0]['id'],
+                $result->resultRows[0]['nome']
+            );
+        });
     }
 }
