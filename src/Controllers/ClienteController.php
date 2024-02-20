@@ -5,24 +5,24 @@ namespace Rinha\Controllers;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
-use Rinha\Repositories\ClienteRepository;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\Cliente;
+use Rinha\Services\ClienteService;
 
 class ClienteController
 {
-    private $repository;
+    private $service;
 
-    public function __construct(ClienteRepository $repository)
+    public function __construct(ClienteService $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /** @return PromiseInterface<ResponseInterface> **/
     public function __invoke(ServerRequestInterface $request): PromiseInterface
     {
         $id = $request->getAttribute('id');
-        return $this->repository->find($id)->then(function (?Cliente $cliente) {
+        return $this->service->getCliente($id)->then(function (?Cliente $cliente) {
 
             if ($cliente === null) {
                 return Response::plaintext(
