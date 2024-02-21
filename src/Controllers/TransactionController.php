@@ -5,38 +5,39 @@ namespace Rinha\Controllers;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
-use Rinha\Repositories\ClienteRepository;
 use React\Promise\PromiseInterface;
+use Rinha\Entities\Conta;
+use Rinha\Services\ContaService;
 
 class TransactionController
 {
-    private $clienteRepository;
+    private $contaService;
 
-    public function __construct(ClienteRepository $clienteRepository)
+    public function __construct(ContaService $contaService)
     {
-        $this->clienteRepository = $clienteRepository;
+        $this->contaService = $contaService;
     }
 
     /** @return PromiseInterface<ResponseInterface> **/
     public function __invoke(ServerRequestInterface $request): PromiseInterface
     {
         $data = json_decode((string) $request->getBody());
-        $valor = $data->valor ?? '';
-        $tipo = $data->tipo ?? '';
-        $descricao = $data->descricao ?? '';
-
 
         $id = $request->getAttribute('id');
-        return $this->repository->add($id)->then(function (?Cliente $cliente) {
+        return $this->contaService->getContaByClienteId($id)->then(function (?Conta $conta) use ($data) {
 
-            if ($cliente === null) {
+            if ($conta === null) {
                 return Response::plaintext(
-                    "Cliente não encontrado\n"
+                    "Conta não encontrada\n"
                 )->withStatus(Response::STATUS_NOT_FOUND);
             }
 
+            $valor = $data->valor ?? '';
+            $tipo = $data->tipo ?? '';
+            $descricao = $data->descricao ?? '';
+
             return Response::json(
-                $cliente
+                $conta
             );
         });
     }

@@ -18,8 +18,8 @@ class ClienteService
     /** @return PromiseInterface<?Cliente> **/
     public function getCliente(int $id): PromiseInterface
     {
-        return $this->repository->find($id)->then(function (?Cliente $cliente) {
-            return $cliente;
-        });
+        return $this->repository->find($id)->then(
+            function (?Cliente $cliente) { return $cliente; }
+        );
     }
 }

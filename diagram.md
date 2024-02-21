@@ -46,7 +46,7 @@ create table contas (
 
 alter table contas add foreign key (cliente_id) references clientes(id);
 
-create index idx_conta on contas (cliente_id, limite, saldo);
+create index idx_conta on contas (cliente_id, id, limite, saldo);
 
 
 create table transacoes (

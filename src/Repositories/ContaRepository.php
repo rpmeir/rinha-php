@@ -4,10 +4,10 @@ namespace Rinha\Repositories;
 
 use React\MySQL\ConnectionInterface;
 use React\MySQL\QueryResult;
-use Rinha\Entities\Cliente;
 use React\Promise\PromiseInterface;
+use Rinha\Entities\Conta;
 
-class ClienteRepository
+class ContaRepository
 {
     private $db;
 
@@ -16,21 +16,23 @@ class ClienteRepository
         $this->db = $db;
     }
 
-    /** @return PromiseInterface<?Cliente> **/
-    public function find(int $id): PromiseInterface
+    /** @return PromiseInterface<?Conta> **/
+    public function findByClienteId(int $clienteId): PromiseInterface
     {
         return $this->db->query(
-            'SELECT id, nome FROM clientes WHERE id = ?',
-            [$id]
+            'SELECT cliente_id, id, limite, saldo FROM contas WHERE cliente_id = ?',
+            [$clienteId]
         )->then(
             function (QueryResult $result) {
                 if (count($result->resultRows) === 0) {
                     return null;
                 }
 
-                return new Cliente(
+                return new Conta(
                     $result->resultRows[0]['id'],
-                    $result->resultRows[0]['nome']
+                    $result->resultRows[0]['cliente_id'],
+                    $result->resultRows[0]['limite'],
+                    $result->resultRows[0]['saldo']
                 );
             }
         );

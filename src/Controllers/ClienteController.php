@@ -22,17 +22,19 @@ class ClienteController
     public function __invoke(ServerRequestInterface $request): PromiseInterface
     {
         $id = $request->getAttribute('id');
-        return $this->service->getCliente($id)->then(function (?Cliente $cliente) {
+        return $this->service->getCliente($id)->then(
+            function (?Cliente $cliente) {
 
-            if ($cliente === null) {
-                return Response::plaintext(
-                    "Cliente não encontrado\n"
-                )->withStatus(Response::STATUS_NOT_FOUND);
+                if ($cliente === null) {
+                    return Response::plaintext(
+                        "Cliente não encontrado\n"
+                    )->withStatus(Response::STATUS_NOT_FOUND);
+                }
+
+                return Response::json(
+                    $cliente
+                );
             }
-
-            return Response::json(
-                $cliente
-            );
-        });
+        );
     }
 }
