@@ -52,24 +52,23 @@ class TransactionController
                     )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
                 }
 
-                $saldoAtual = $conta->getSaldo();
-                $valorTransacao = $transacaoDTO->valor * ($transacaoDTO->tipo === 'd' ? -1 : 1);
-                $conta->setSaldo($saldoAtual + $valorTransacao);
-
                 return $this->transacaoService->create($conta, $transacaoDTO)->then(
-                    function (?Transacao $transacao) use ($conta) {
+                    function (?Transacao $transacao) use ($conta, $transacaoDTO) {
                         if ($transacao === null) {
                             return Response::plaintext(
                                 "Erro ao registrar a transacao\n"
                             )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
                         }
+
+                        $saldoAtual = $conta->getSaldo();
+                        $valorTransacao = $transacaoDTO->valor * ($transacaoDTO->tipo === 'd' ? -1 : 1);
+                        $conta->setSaldo($saldoAtual + $valorTransacao);
+
                         return Response::json(
                             ['limite' => $conta->limite, 'saldo' => $conta->getSaldo()]
                         );
                     }
                 );
-
-
             }
         );
     }
