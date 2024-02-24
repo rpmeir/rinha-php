@@ -20,25 +20,26 @@ class TransacaoRepository
     /** @return PromiseInterface<?Transacao> **/
     public function add(int $conta_id, TransacaoDTO $transacaoDTO): PromiseInterface
     {
-        $realizada_em = new \DateTimeImmutable();
+        $realizada_em = (new \DateTimeImmutable());
         return $this->db->query(
             'INSERT INTO transacoes (conta_id, valor, tipo, descricao, realizada_em) VALUES (?, ?, ?, ?, ?)',
-            [$conta_id, $transacaoDTO->valor, $transacaoDTO->tipo, $transacaoDTO->descricao, $realizada_em]
-        )->then(
-            function (QueryResult $result) {
+            [ $conta_id, $transacaoDTO->valor, $transacaoDTO->tipo,
+                      $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s') ] )->then(
+            function (QueryResult $result) use ($conta_id, $transacaoDTO, $realizada_em) {
 
                 if ($result->insertId !== 0) {
-                    var_dump('last insert ID', $result->insertId);
+                    return new Transacao(
+                        $result->insertId,
+                        $conta_id,
+                        $transacaoDTO->valor,
+                        $transacaoDTO->tipo,
+                        $transacaoDTO->descricao,
+                        $realizada_em
+                    );
                 }
 
-                return new Transacao(
-                    $result->insertId,
-                    1,
-                    2,
-                    'd',
-                    'descricao',
-                    new \DateTimeImmutable()
-                );
+                return null;
+
             }
         );
     }

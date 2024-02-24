@@ -20,11 +20,21 @@ class TransacaoService
     /** @return PromiseInterface<?Transacao> **/
     public function create(Conta $conta, TransacaoDTO $transacaoDTO): PromiseInterface
     {
-        // $saldoPrevisto = $conta->getSaldo() + $transacaoDTO->valor;
-        // if saldo previsto ficar inconsistente com limite, rejeitar transação
-
         return $this->repository->add($conta->id, $transacaoDTO)->then(
-            function (?Transacao $transacao) { return $transacao; }
+            function (?Transacao $transacao) {
+                return $transacao;
+            }
         );
+    }
+
+    public function transacaoValida(Conta $conta, TransacaoDTO $transacaoDTO): bool
+    {
+        $sinal = $transacaoDTO->tipo === 'd' ? -1 : 1;
+        $valor = $transacaoDTO->valor * $sinal;
+        $saldoPrevisto = $conta->getSaldo() + $valor + $conta->limite;
+        if($saldoPrevisto < 0) {
+            return false;
+        }
+        return true;
     }
 }

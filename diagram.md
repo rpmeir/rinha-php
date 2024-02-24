@@ -63,6 +63,13 @@ alter table transacoes add foreign key (conta_id) references contas(id);
 
 create index idx_transacao on transacoes (conta_id, valor, tipo, descricao, realizada_em);
 
+CREATE TRIGGER ins_transacao AFTER INSERT ON transacoes
+FOR EACH ROW
+BEGIN
+  UPDATE contas
+  SET contas.saldo = contas.saldo + (NEW.valor * (CASE WHEN NEW.tipo = 'd' THEN -1 ELSE 1 END))
+  WHERE contas.id = NEW.conta_id;
+END;
 
 insert into clientes (nome)
 values
@@ -79,7 +86,6 @@ values
 (3,  1000000, 0),
 (4, 10000000, 0),
 (5,   500000, 0);
-
 
 
 ```
