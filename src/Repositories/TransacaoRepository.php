@@ -24,11 +24,10 @@ class TransacaoRepository
         return $this->db->query(
             'INSERT INTO transacoes (conta_id, valor, tipo, descricao, realizada_em) VALUES (?, ?, ?, ?, ?)',
             [ $conta_id, $transacaoDTO->valor, $transacaoDTO->tipo,
-                      $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s') ] )->then(
-            function (QueryResult $result) use ($conta_id, $transacaoDTO, $realizada_em) {
-
+                      $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s') ]
+            )->then( function (QueryResult $result) use ($conta_id, $transacaoDTO, $realizada_em) {
                 if ($result->insertId !== 0) {
-                    return new Transacao(
+                    return new Transacao (
                         $result->insertId,
                         $conta_id,
                         $transacaoDTO->valor,
@@ -37,9 +36,7 @@ class TransacaoRepository
                         $realizada_em
                     );
                 }
-
                 return null;
-
             }
         );
     }

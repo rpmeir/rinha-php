@@ -27,14 +27,20 @@ class TransacaoService
         );
     }
 
-    public function transacaoValida(Conta $conta, TransacaoDTO $transacaoDTO): bool
+    public function transacaoValida(Conta $conta, object $data): TransacaoDTO | string
     {
+        $transacaoDTO = TransacaoDTO::create($data->valor, $data->tipo, $data->descricao);
+        if ($transacaoDTO === null) {
+            return "Entidade incorreta";
+        }
+
         $sinal = $transacaoDTO->tipo === 'd' ? -1 : 1;
         $valor = $transacaoDTO->valor * $sinal;
         $saldoPrevisto = $conta->getSaldo() + $valor + $conta->limite;
         if($saldoPrevisto < 0) {
-            return false;
+            return 'Transação invalida: saldo insuficiente';
         }
-        return true;
+
+        return $transacaoDTO;
     }
 }

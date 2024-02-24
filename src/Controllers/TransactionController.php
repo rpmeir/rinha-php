@@ -38,17 +38,10 @@ class TransactionController
                     )->withStatus(Response::STATUS_NOT_FOUND);
                 }
 
-                $transacaoDTO = TransacaoDTO::create($data->valor, $data->tipo, $data->descricao);
-                if ($transacaoDTO === null) {
+                $transacaoDTO = $this->transacaoService->transacaoValida($conta, $data);
+                if (!$transacaoDTO instanceof TransacaoDTO) {
                     return Response::plaintext(
-                        "Entidade incorreta\n"
-                    )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
-                }
-
-                $transacaoValida = $this->transacaoService->transacaoValida($conta, $transacaoDTO);
-                if (!$transacaoValida) {
-                    return Response::plaintext(
-                        "Transação inválida\n"
+                        "$transacaoDTO\n"
                     )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
                 }
 
@@ -56,7 +49,7 @@ class TransactionController
                     function (?Transacao $transacao) use ($conta, $transacaoDTO) {
                         if ($transacao === null) {
                             return Response::plaintext(
-                                "Erro ao registrar a transacao\n"
+                                "Erro ao salvar a transacao\n"
                             )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
                         }
 
