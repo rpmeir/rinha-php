@@ -13,7 +13,8 @@
         }
     ],
     "require-dev": {
-        "pestphp/pest": "^1.23"
+        "pestphp/pest": "^1.23",
+        "mockery/mockery": "^1.6"
     },
     "config": {
         "allow-plugins": {
@@ -22,6 +23,7 @@
     },
     "require": {
         "clue/framework-x": "dev-main",
-        "react/mysql": "^0.6"
+        "react/mysql": "^0.6",
+        "vlucas/phpdotenv": "^5.6"
     }
 }

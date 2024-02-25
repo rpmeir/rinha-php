@@ -16,11 +16,17 @@ class DependencyInjection {
 
         $connections = [
             ConnectionInterface::class => function () {
-                $credentials = 'test:test@localhost/rinha';
+                $credentials = "$_ENV[MYSQL_USER]:$_ENV[MYSQL_PASSWORD]@localhost/$_ENV[MYSQL_DATABASE]";
                 return (new Factory())->createLazyConnection($credentials);
             }
         ];
 
-        return new Container(array_merge($connections));
+        $controllers = [];
+
+        $services = [];
+
+        $repositories = [];
+
+        return new Container(array_merge($connections, $controllers, $services, $repositories));
     }
 }

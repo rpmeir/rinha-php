@@ -71,6 +71,8 @@ BEGIN
   WHERE contas.id = NEW.conta_id;
 END;
 
+DELETE from clientes WHERE id >= 1;
+
 insert into clientes (nome)
 values
 ('Milionario'),
@@ -78,6 +80,8 @@ values
 ('Dinheirudo'),
 ('Pobrecito'),
 ('Gastao');
+
+DELETE from contas WHERE id >= 1;
 
 insert into contas (cliente_id, limite, saldo)
 values

@@ -7,8 +7,9 @@ use React\Promise\PromiseInterface;
 use Rinha\Entities\Conta;
 use Rinha\Entities\TransacaoDTO;
 use Rinha\Repositories\TransacaoRepository;
+use Rinha\Services\Interfaces\TransacaoServiceInterface;
 
-class TransacaoService
+class TransacaoService implements TransacaoServiceInterface
 {
     private $repository;
 
