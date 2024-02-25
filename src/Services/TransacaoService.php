@@ -32,8 +32,8 @@ class TransacaoService implements TransacaoServiceInterface
     public function transacaoValida(Conta $conta, object $data): TransacaoDTO | string
     {
         $transacaoDTO = TransacaoDTO::create($data->valor, $data->tipo, $data->descricao);
-        if ($transacaoDTO === null) {
-            return "Entidade incorreta";
+        if (is_string($transacaoDTO) && !empty($transacaoDTO)) {
+            return $transacaoDTO;
         }
 
         $sinal = $transacaoDTO->tipo === 'd' ? -1 : 1;

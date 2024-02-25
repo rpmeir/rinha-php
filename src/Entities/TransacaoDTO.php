@@ -12,20 +12,31 @@ class TransacaoDTO
 
     }
 
-    public static function create($valor, $tipo, $descricao): TransacaoDTO | null
+    public static function create($valor, $tipo, $descricao): TransacaoDTO | string
     {
-        if(!TransacaoDTO::validate($valor, $tipo, $descricao)) {
-            return null;
+        $erros = TransacaoDTO::validate($valor, $tipo, $descricao);
+        if(!empty($erros)) {
+            return $erros;
         }
         return new TransacaoDTO($valor, $tipo, $descricao);
     }
 
-    public static function validate($valor, $tipo, $descricao): bool
+    public static function validate($valor, $tipo, $descricao): string
     {
+        $erros = '';
+
         $nenhumCampoVazio =  !empty($valor) && !empty($tipo) && !empty($descricao);
+        $erros .= $nenhumCampoVazio ? '' : "Todos os campos devem ser preenchidos.\n";
+
         $valorInteiroMaiorQueZero = is_int($valor) && $valor > 0;
+        $erros .= $valorInteiroMaiorQueZero ? '' : "O valor deve ser um inteiro positivo.\n";
+
         $tipoCorreto = in_array($tipo, ['c', 'd'], true);
+        $erros .= $tipoCorreto ? '' : "O tipo deve ser C ou D.\n";
+
         $descricaoValida = is_string($descricao) && strlen($descricao) >= 1 && strlen($descricao) <= 10;
-        return $nenhumCampoVazio && $valorInteiroMaiorQueZero && $tipoCorreto && $descricaoValida;
+        $erros .= $descricaoValida ? '' : "A descricão deve ter entre 1 e 10 caracteres.\n";
+
+        return $erros;
     }
 }
