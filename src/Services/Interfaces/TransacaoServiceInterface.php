@@ -10,4 +10,5 @@ interface TransacaoServiceInterface
 {
     public function create(Conta $conta, TransacaoDTO $transacaoDTO): PromiseInterface;
     public function transacaoValida(Conta $conta, object $data): TransacaoDTO | string;
+    public function getDezUltimasTransacoes(int $contaId): PromiseInterface;
 }

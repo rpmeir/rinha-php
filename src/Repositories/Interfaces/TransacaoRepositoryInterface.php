@@ -8,4 +8,5 @@ use Rinha\Entities\TransacaoDTO;
 interface TransacaoRepositoryInterface
 {
     public function add(int $conta_id, TransacaoDTO $transacaoDTO): PromiseInterface;
+    public function lastTenTransactions(int $contaId): PromiseInterface;
 }

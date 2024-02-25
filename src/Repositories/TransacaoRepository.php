@@ -7,6 +7,7 @@ use React\MySQL\QueryResult;
 use Rinha\Entities\Transacao;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\TransacaoDTO;
+use Rinha\Entities\UltimaTransacaoDTO;
 use Rinha\Repositories\Interfaces\TransacaoRepositoryInterface;
 
 class TransacaoRepository implements TransacaoRepositoryInterface
@@ -40,5 +41,27 @@ class TransacaoRepository implements TransacaoRepositoryInterface
                 return null;
             }
         );
+    }
+
+    public function lastTenTransactions(int $contaId): PromiseInterface
+    {
+        return $this->db->query(
+            'SELECT * FROM transacoes WHERE conta_id = ? ORDER BY realizada_em DESC LIMIT 10',
+            [ $contaId ]
+        )->then( function (QueryResult $result) {
+            $transacoes = [];
+            if (isset($result->resultRows)) {
+                foreach ($result->resultRows as $row) {
+                    $realizada_em = new \DateTimeImmutable($row['realizada_em']);
+                    $transacoes[] = UltimaTransacaoDTO::create(
+                        $row['valor'],
+                        $row['tipo'],
+                        $row['descricao'],
+                        $realizada_em
+                    );
+                }
+            }
+            return $transacoes;
+        });
     }
 }

@@ -6,6 +6,7 @@ use Rinha\Entities\Transacao;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\Conta;
 use Rinha\Entities\TransacaoDTO;
+use Rinha\Entities\UltimaTransacaoDTO;
 use Rinha\Repositories\TransacaoRepository;
 use Rinha\Services\Interfaces\TransacaoServiceInterface;
 
@@ -43,5 +44,13 @@ class TransacaoService implements TransacaoServiceInterface
         }
 
         return $transacaoDTO;
+    }
+
+    /** @return PromiseInterface<?array<UltimaTransacaoDTO>> **/
+    public function getDezUltimasTransacoes(int $contaId): PromiseInterface
+    {
+        return $this->repository->lastTenTransactions($contaId)->then(
+            function (?array $transacoes) { return $transacoes; }
+        );
     }
 }
