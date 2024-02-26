@@ -46,7 +46,11 @@ class TransacaoRepository implements TransacaoRepositoryInterface
     public function lastTenTransactions(int $contaId): PromiseInterface
     {
         return $this->db->query(
-            'SELECT * FROM transacoes WHERE conta_id = ? ORDER BY realizada_em DESC LIMIT 10',
+            'SELECT conta_id, valor, tipo, descricao, realizada_em
+             FROM transacoes
+             WHERE conta_id = ?
+             ORDER BY realizada_em
+             DESC LIMIT 10',
             [ $contaId ]
         )->then( function (QueryResult $result) {
             $transacoes = [];

@@ -54,7 +54,7 @@ class TransactionController
                         }
 
                         $saldoAtual = $conta->getSaldo();
-                        $valorTransacao = $transacaoDTO->valor * ($transacaoDTO->tipo === 'd' ? -1 : 1);
+                        $valorTransacao = $transacao->valor * ($transacao->tipo === 'd' ? -1 : 1);
                         $conta->setSaldo($saldoAtual + $valorTransacao);
 
                         return Response::json(
