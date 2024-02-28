@@ -6,8 +6,9 @@ use React\MySQL\ConnectionInterface;
 use React\MySQL\QueryResult;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\Conta;
+use Rinha\Repositories\Interfaces\IContaRepository;
 
-class ContaRepository
+class ContaRepository implements IContaRepository
 {
     private $db;
 

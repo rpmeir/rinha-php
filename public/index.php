@@ -14,10 +14,6 @@ $container = new DependencyInjection();
 
 $app = new FrameworkX\App($container->getContainer());
 
-$app->get('/', function () {
-    return React\Http\Message\Response::plaintext("Rinha de Backend!\n");
-});
-$app->get('/clientes/{id:\d+}', ClienteController::class);
 $app->post('/clientes/{id:\d+}/transacoes', TransactionController::class);
 $app->get('/clientes/{id:\d+}/extrato', ExtractController::class);
 

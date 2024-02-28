@@ -5,8 +5,9 @@ namespace Rinha\Services;
 use Rinha\Entities\Conta;
 use React\Promise\PromiseInterface;
 use Rinha\Repositories\ContaRepository;
+use Rinha\Services\Interfaces\IContaService;
 
-class ContaService
+class ContaService implements IContaService
 {
     private $repository;
 

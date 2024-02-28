@@ -8,9 +8,9 @@ use Rinha\Entities\Transacao;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\TransacaoDTO;
 use Rinha\Entities\UltimaTransacaoDTO;
-use Rinha\Repositories\Interfaces\TransacaoRepositoryInterface;
+use Rinha\Repositories\Interfaces\ITransacaoRepository;
 
-class TransacaoRepository implements TransacaoRepositoryInterface
+class TransacaoRepository implements ITransacaoRepository
 {
     private $db;
 

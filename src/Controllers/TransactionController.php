@@ -46,7 +46,7 @@ class TransactionController
                 }
 
                 return $this->transacaoService->create($conta, $transacaoDTO)->then(
-                    function (?Transacao $transacao) use ($conta, $transacaoDTO) {
+                    function (?Transacao $transacao) use ($conta) {
                         if ($transacao === null) {
                             return Response::plaintext(
                                 "Erro ao salvar a transacao\n"

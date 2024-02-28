@@ -8,9 +8,9 @@ use Rinha\Entities\Conta;
 use Rinha\Entities\TransacaoDTO;
 use Rinha\Entities\UltimaTransacaoDTO;
 use Rinha\Repositories\TransacaoRepository;
-use Rinha\Services\Interfaces\TransacaoServiceInterface;
+use Rinha\Services\Interfaces\ITransacaoService;
 
-class TransacaoService implements TransacaoServiceInterface
+class TransacaoService implements ITransacaoService
 {
     private $repository;
 
