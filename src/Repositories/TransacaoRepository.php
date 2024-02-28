@@ -24,21 +24,21 @@ class TransacaoRepository implements ITransacaoRepository
     {
         $realizada_em = (new \DateTimeImmutable());
         return $this->db->query(
-            'INSERT INTO transacoes (conta_id, valor, tipo, descricao, realizada_em) VALUES (?, ?, ?, ?, ?)',
+            'INSERT INTO transacoes (conta_id, valor, tipo, descricao, realizada_em)
+             VALUES (?, ?, ?, ?, ?)',
             [ $conta_id, $transacaoDTO->valor, $transacaoDTO->tipo,
               $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s') ]
             )->then( function (QueryResult $result) use ($conta_id, $transacaoDTO, $realizada_em) {
-                if ($result->insertId !== 0) {
-                    return new Transacao (
-                        $result->insertId,
-                        $conta_id,
-                        $transacaoDTO->valor,
-                        $transacaoDTO->tipo,
-                        $transacaoDTO->descricao,
-                        $realizada_em
-                    );
+                if ($result->affectedRows !== 1) {
+                    return null;
                 }
-                return null;
+                return new Transacao (
+                    $conta_id,
+                    $transacaoDTO->valor,
+                    $transacaoDTO->tipo,
+                    $transacaoDTO->descricao,
+                    $realizada_em
+                );
             }
         );
     }

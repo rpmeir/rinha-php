@@ -17,7 +17,7 @@ class UltimaTransacaoDTO
             $valor,
             $tipo,
             $descricao,
-            $realizada_em->format('Y-m-d H:i:s')
+            $realizada_em->format('c')
         );
     }
 }
