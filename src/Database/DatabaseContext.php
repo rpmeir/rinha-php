@@ -5,6 +5,9 @@ namespace Rinha\Database;
 use React\Promise\PromiseInterface;
 use Rinha\Database\Interfaces\IDatabaseStrategy;
 use Rinha\Entities\TransacaoDTO;
+use Rinha\Entities\UltimaTransacaoDTO;
+use Rinha\Entities\Conta;
+use Rinha\Entities\Transacao;
 
 class DatabaseContext
 {
@@ -20,18 +23,27 @@ class DatabaseContext
         $this->db = $db;
     }
 
+    /** @return PromiseInterface<?Conta> **/
     public function findByClienteId(int $id): PromiseInterface
     {
-        return $this->db->findByClienteId($id);
+        return $this->db->findByClienteId($id)->then(function(Conta $conta) {
+            return $conta;
+        });
     }
 
+    /** @return PromiseInterface<?Transacao> **/
     public function addTransaction(int $conta_id, TransacaoDTO $transacaoDTO): PromiseInterface
     {
-        return $this->db->addTransaction($conta_id, $transacaoDTO);
+        return $this->db->addTransaction($conta_id, $transacaoDTO)->then(function(Transacao $transacao) {
+            return $transacao;
+        });
     }
 
+    /** @return PromiseInterface<?array<UltimaTransacaoDTO>> **/
     public function lastTenTransactions(int $contaId): PromiseInterface
     {
-        return $this->db->lastTenTransactions($contaId);
+        return $this->db->lastTenTransactions($contaId)->then(function(array $transacoes) {
+            return $transacoes;
+        });
     }
 }

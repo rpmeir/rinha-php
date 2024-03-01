@@ -67,6 +67,7 @@ class MysqlContext implements IDatabaseStrategy
         );
     }
 
+    /** @return PromiseInterface<?array<UltimaTransacaoDTO>> **/
     public function lastTenTransactions(int $contaId): PromiseInterface
     {
         return $this->dbContext->query(

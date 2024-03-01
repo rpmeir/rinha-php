@@ -39,6 +39,9 @@ class SqliteContext implements IDatabaseStrategy
                     $result->rows[0]['limite'],
                     $result->rows[0]['saldo']
                 );
+            }, function (\Exception $error) {
+                // the query was not executed successfully
+                echo 'Error get conta: ' . $error->getMessage() . PHP_EOL;
             }
         );
     }
@@ -63,10 +66,14 @@ class SqliteContext implements IDatabaseStrategy
                     $transacaoDTO->descricao,
                     $realizada_em
                 );
+            }, function (\Exception $error) {
+                // the query was not executed successfully
+                echo 'Error on add transaction: ' . $error->getMessage() . PHP_EOL;
             }
         );
     }
 
+    /** @return PromiseInterface<?array<UltimaTransacaoDTO>> **/
     public function lastTenTransactions(int $contaId): PromiseInterface
     {
         return $this->dbContext->query(
@@ -90,6 +97,9 @@ class SqliteContext implements IDatabaseStrategy
                 }
             }
             return $transacoes;
+        }, function (\Exception $error) {
+            // the query was not executed successfully
+            echo 'Error on get last 10 transactions: ' . $error->getMessage() . PHP_EOL;
         });
     }
 
