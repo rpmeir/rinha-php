@@ -2,6 +2,8 @@
 
 namespace Rinha\Services;
 
+use Rinha\Database\MysqlContext;
+use Rinha\Database\SqliteContext;
 use Rinha\Entities\Transacao;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\Conta;
@@ -14,7 +16,7 @@ class TransacaoService implements ITransacaoService
 {
     private $repository;
 
-    public function __construct(TransacaoRepository $repository)
+    public function __construct($repository = new TransacaoRepository(new MysqlContext()))
     {
         $this->repository = $repository;
     }
@@ -22,7 +24,7 @@ class TransacaoService implements ITransacaoService
     /** @return PromiseInterface<?Transacao> **/
     public function create(Conta $conta, TransacaoDTO $transacaoDTO): PromiseInterface
     {
-        return $this->repository->add($conta->id, $transacaoDTO)->then(
+        return $this->repository->addTransaction($conta->id, $transacaoDTO)->then(
             function (?Transacao $transacao) {
                 return $transacao;
             }

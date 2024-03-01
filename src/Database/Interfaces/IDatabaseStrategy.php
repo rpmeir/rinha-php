@@ -1,12 +1,12 @@
 <?php
 
-namespace Rinha\Repositories\Interfaces;
-
+namespace Rinha\Database\Interfaces;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\TransacaoDTO;
 
-interface ITransacaoRepository
+interface IDatabaseStrategy
 {
+    public function findByClienteId(int $id): PromiseInterface;
     public function addTransaction(int $conta_id, TransacaoDTO $transacaoDTO): PromiseInterface;
     public function lastTenTransactions(int $contaId): PromiseInterface;
 }
