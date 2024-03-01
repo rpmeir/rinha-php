@@ -13,7 +13,7 @@ class ContaService implements IContaService
 {
     private $repository;
 
-    public function __construct($repository = new ContaRepository(new MysqlContext()))
+    public function __construct($repository = new ContaRepository(new SqliteContext()))
     {
         $this->repository = $repository;
     }

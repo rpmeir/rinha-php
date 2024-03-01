@@ -26,7 +26,7 @@ class DatabaseContext
     /** @return PromiseInterface<?Conta> **/
     public function findByClienteId(int $id): PromiseInterface
     {
-        return $this->db->findByClienteId($id)->then(function(Conta $conta) {
+        return $this->db->findByClienteId($id)->then(function(?Conta $conta) {
             return $conta;
         });
     }
@@ -34,7 +34,7 @@ class DatabaseContext
     /** @return PromiseInterface<?Transacao> **/
     public function addTransaction(int $conta_id, TransacaoDTO $transacaoDTO): PromiseInterface
     {
-        return $this->db->addTransaction($conta_id, $transacaoDTO)->then(function(Transacao $transacao) {
+        return $this->db->addTransaction($conta_id, $transacaoDTO)->then(function(?Transacao $transacao) {
             return $transacao;
         });
     }

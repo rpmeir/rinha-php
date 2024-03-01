@@ -16,7 +16,7 @@ class TransacaoService implements ITransacaoService
 {
     private $repository;
 
-    public function __construct($repository = new TransacaoRepository(new MysqlContext()))
+    public function __construct($repository = new TransacaoRepository(new SqliteContext()))
     {
         $this->repository = $repository;
     }

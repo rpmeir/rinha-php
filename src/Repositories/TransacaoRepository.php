@@ -7,6 +7,7 @@ use Rinha\Database\Interfaces\IDatabaseStrategy;
 use Rinha\Entities\Transacao;
 use React\Promise\PromiseInterface;
 use Rinha\Entities\TransacaoDTO;
+use Rinha\Entities\UltimaTransacaoDTO;
 use Rinha\Repositories\Interfaces\ITransacaoRepository;
 
 class TransacaoRepository implements ITransacaoRepository
@@ -22,11 +23,16 @@ class TransacaoRepository implements ITransacaoRepository
     /** @return PromiseInterface<?Transacao> **/
     public function addTransaction(int $conta_id, TransacaoDTO $transacaoDTO): PromiseInterface
     {
-        return $this->db->addTransaction($conta_id, $transacaoDTO);
+        return $this->db->addTransaction($conta_id, $transacaoDTO)->then(function (?Transacao $transacao) {
+            return $transacao;
+        });
     }
 
+    /** @return PromiseInterface<?array<UltimaTransacaoDTO>> **/
     public function lastTenTransactions(int $contaId): PromiseInterface
     {
-        return $this->db->lastTenTransactions($contaId);
+        return $this->db->lastTenTransactions($contaId)->then(function (array $transacoes) {
+            return $transacoes;
+        });
     }
 }

@@ -21,6 +21,8 @@ class ContaRepository implements IContaRepository
     /** @return PromiseInterface<?Conta> **/
     public function findByClienteId(int $clienteId): PromiseInterface
     {
-        return $this->db->findByClienteId($clienteId);
+        return $this->db->findByClienteId($clienteId)->then(function (?Conta $conta) {
+            return $conta;
+        });
     }
 }
