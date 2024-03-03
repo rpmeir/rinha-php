@@ -2,6 +2,7 @@
 
 namespace Rinha\Services;
 
+use Rinha\Database\InMemoryContext;
 use Rinha\Database\MysqlContext;
 use Rinha\Database\SqliteContext;
 use Rinha\Entities\Transacao;
@@ -16,7 +17,7 @@ class TransacaoService implements ITransacaoService
 {
     private $repository;
 
-    public function __construct($repository = new TransacaoRepository(new SqliteContext()))
+    public function __construct($repository = new TransacaoRepository(new InMemoryContext()))
     {
         $this->repository = $repository;
     }
