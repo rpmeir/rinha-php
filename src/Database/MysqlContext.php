@@ -25,7 +25,9 @@ class MysqlContext implements IDatabaseStrategy
     public function findByClienteId(int $clienteId): PromiseInterface
     {
         return $this->dbContext->query(
-            'SELECT cliente_id, id, limite, saldo FROM contas WHERE cliente_id = ?',
+            'SELECT cliente_id, id, limite, saldo
+            FROM contas
+            WHERE cliente_id = ?',
             [$clienteId]
         )->then(
             function (QueryResult $result) {
@@ -74,8 +76,8 @@ class MysqlContext implements IDatabaseStrategy
             'SELECT conta_id, valor, tipo, descricao, realizada_em
              FROM transacoes
              WHERE conta_id = ?
-             ORDER BY realizada_em
-             DESC LIMIT 10',
+             ORDER BY realizada_em DESC
+             LIMIT 10',
             [ $contaId ]
         )->then( function (QueryResult $result) {
             $transacoes = [];

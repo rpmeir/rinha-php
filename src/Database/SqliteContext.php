@@ -25,7 +25,9 @@ class SqliteContext implements IDatabaseStrategy
     public function findByClienteId(int $clienteId): PromiseInterface
     {
         return $this->dbContext->query(
-            'SELECT cliente_id, id, limite, saldo FROM contas WHERE cliente_id = ?',
+            'SELECT cliente_id, id, limite, saldo
+            FROM contas
+            WHERE cliente_id = ?',
             [$clienteId]
         )->then(
             function (Result $result) {
@@ -54,7 +56,7 @@ class SqliteContext implements IDatabaseStrategy
             'INSERT INTO transacoes (conta_id, valor, tipo, descricao, realizada_em)
              VALUES (?, ?, ?, ?, ?)',
             [ $conta_id, $transacaoDTO->valor, $transacaoDTO->tipo,
-              $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s') ]
+              $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s.u') ]
             )->then( function (Result $result) use ($conta_id, $transacaoDTO, $realizada_em) {
                 if ($result->changed === 0) {
                     return null;
@@ -80,8 +82,8 @@ class SqliteContext implements IDatabaseStrategy
             'SELECT conta_id, valor, tipo, descricao, realizada_em
              FROM transacoes
              WHERE conta_id = ?
-             ORDER BY realizada_em
-             DESC LIMIT 10',
+             ORDER BY realizada_em DESC
+             LIMIT 10',
             [ $contaId ]
         )->then( function (Result $result) {
             $transacoes = [];
