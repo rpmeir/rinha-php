@@ -51,7 +51,7 @@ class MysqlContext implements IDatabaseStrategy
             'INSERT INTO transacoes (conta_id, valor, tipo, descricao, realizada_em)
              VALUES (?, ?, ?, ?, ?)',
             [ $conta_id, $transacaoDTO->valor, $transacaoDTO->tipo,
-              $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s') ]
+              $transacaoDTO->descricao, $realizada_em->format('Y-m-d H:i:s.u') ]
             )->then( function (QueryResult $result) use ($conta_id, $transacaoDTO, $realizada_em) {
                 if ($result->affectedRows !== 1) {
                     return null;

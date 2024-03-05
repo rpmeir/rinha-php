@@ -42,7 +42,7 @@ create table transacoes (
    valor bigint not null,
    tipo char(1) not null,
    descricao varchar(10) not null,
-   realizada_em datetime not null,
+   realizada_em datetime(6) not null,
    foreign key (conta_id) references contas(id)
 );
 

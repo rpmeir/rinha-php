@@ -16,7 +16,7 @@ class SaldoDTO
     {
         return new self(
             $conta->getSaldo(),
-            (new \DateTimeImmutable())->format('c'),
+            (new \DateTimeImmutable())->format("Y-m-d\TH:i:s.u\Z"),
             $conta->limite
         );
     }
