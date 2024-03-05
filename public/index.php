@@ -1,7 +1,6 @@
 <?php
 
 use Rinha\Config\DependencyInjection;
-use Rinha\Controllers\ClienteController;
 use Rinha\Controllers\ExtractController;
 use Rinha\Controllers\TransactionController;
 

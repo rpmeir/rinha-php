@@ -2,9 +2,7 @@
 
 namespace Rinha\Services;
 
-use Rinha\Database\InMemoryContext;
 use Rinha\Database\MysqlContext;
-use Rinha\Database\SqliteContext;
 use Rinha\Entities\Conta;
 use React\Promise\PromiseInterface;
 use Rinha\Repositories\ContaRepository;
@@ -14,7 +12,7 @@ class ContaService implements IContaService
 {
     private $repository;
 
-    public function __construct($repository = new ContaRepository(new InMemoryContext()))
+    public function __construct($repository = new ContaRepository(new MysqlContext()))
     {
         $this->repository = $repository;
     }
