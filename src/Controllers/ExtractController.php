@@ -4,6 +4,7 @@ namespace Rinha\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
+use React\Promise\PromiseInterface;
 use Rinha\Entities\Conta;
 use Rinha\Entities\ExtratoDTO;
 use Rinha\Entities\SaldoDTO;
@@ -24,6 +25,11 @@ class ExtractController
     public function __invoke(ServerRequestInterface $request)
     {
         $id = $request->getAttribute('id');
+        return $this->getContaByClienteId($id);
+    }
+
+    private function getContaByClienteId(int $id): PromiseInterface
+    {
         return $this->contaService->getContaByClienteId($id)->then(
             function (?Conta $conta) {
 
@@ -34,13 +40,18 @@ class ExtractController
                 }
 
                 $saldo = SaldoDTO::fromConta($conta);
-                return $this->transacaoService->getDezUltimasTransacoes($conta->id)->then(
-                    function (?array $transacoes) use ($saldo) {
-                        $extrato = new ExtratoDTO($saldo, $transacoes);
-                        return Response::json(
-                            $extrato
-                        );
-                    }
+                return $this->getDezUltimasTransacoes($conta->id, $saldo);
+            }
+        );
+    }
+
+    private function getDezUltimasTransacoes(int $contaId, SaldoDTO $saldo): PromiseInterface
+    {
+        return $this->transacaoService->getDezUltimasTransacoes($contaId)->then(
+            function (?array $transacoes) use ($saldo) {
+                $extrato = new ExtratoDTO($saldo, $transacoes);
+                return Response::json(
+                    $extrato
                 );
             }
         );

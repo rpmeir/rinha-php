@@ -43,6 +43,11 @@ class TransactionController
         }
 
         $id = $request->getAttribute('id');
+        return $this->getContaByClienteId($id, $data);
+    }
+
+    private function getContaByClienteId(int $id, object $data): PromiseInterface
+    {
         return $this->contaService->getContaByClienteId($id)->then(
             function (?Conta $conta) use ($data) {
 
