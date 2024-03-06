@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0df275f8de92e324976283c80dfa0cb2",
+    "content-hash": "d94108dfb931e31f6352123c859500cc",
     "packages": [
         {
             "name": "clue/framework-x",
-            "version": "dev-main",
+            "version": "v0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/clue/framework-x.git",
-                "reference": "006893331f9f14fd9204d7215acce6a7b1884d9a"
+                "reference": "9b17ad9c86e7302c33d25ddc22ecfa9537a29c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/framework-x/zipball/006893331f9f14fd9204d7215acce6a7b1884d9a",
-                "reference": "006893331f9f14fd9204d7215acce6a7b1884d9a",
+                "url": "https://api.github.com/repos/clue/framework-x/zipball/9b17ad9c86e7302c33d25ddc22ecfa9537a29c6e",
+                "reference": "9b17ad9c86e7302c33d25ddc22ecfa9537a29c6e",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,6 @@
                 "psr/container": "^2 || ^1",
                 "react/promise-timer": "^1.10"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -65,7 +64,7 @@
             ],
             "support": {
                 "issues": "https://github.com/clue/framework-x/issues",
-                "source": "https://github.com/clue/framework-x/tree/main"
+                "source": "https://github.com/clue/framework-x/tree/v0.16.0"
             },
             "funding": [
                 {
@@ -77,7 +76,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-13T11:03:37+00:00"
+            "time": "2024-03-05T14:41:18+00:00"
         },
         {
             "name": "clue/ndjson-react",
@@ -4755,9 +4754,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "clue/framework-x": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

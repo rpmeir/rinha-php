@@ -22,7 +22,7 @@
         }
     },
     "require": {
-        "clue/framework-x": "dev-main",
+        "clue/framework-x": "^0.16",
         "react/mysql": "^0.6",
         "vlucas/phpdotenv": "^5.6",
         "clue/reactphp-sqlite": "^1.6"
