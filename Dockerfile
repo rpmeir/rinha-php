@@ -19,10 +19,6 @@ COPY public/ public/
 COPY src/ src/
 COPY --from=build /app/vendor/ vendor/
 
-ENV MYSQL_PASSWORD rinha
-ENV MYSQL_ROOT_PASSWORD rinha
-ENV MYSQL_USER rinha
-ENV MYSQL_DATABASE rinha
 ENV X_LISTEN 0.0.0.0:8080
 
 EXPOSE 8080

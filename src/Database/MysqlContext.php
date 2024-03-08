@@ -17,7 +17,7 @@ class MysqlContext implements IDatabaseStrategy
 
     public function __construct()
     {
-        $credentials = "$_ENV[MYSQL_USER]:$_ENV[MYSQL_PASSWORD]@localhost/$_ENV[MYSQL_DATABASE]";
+        $credentials = "$_ENV[MYSQL_USER]:$_ENV[MYSQL_PASSWORD]@$_ENV[MYSQL_HOSTNAME]/$_ENV[MYSQL_DATABASE]";
         $this->dbContext = (new Factory())->createLazyConnection($credentials);
     }
 
