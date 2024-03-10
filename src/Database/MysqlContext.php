@@ -6,6 +6,7 @@ use React\MySQL\Factory;
 use React\MySQL\QueryResult;
 use React\Promise\PromiseInterface;
 use Rinha\Database\Interfaces\IDatabaseStrategy;
+use Rinha\Entities\ConfirmacaoTransacao;
 use Rinha\Entities\Conta;
 use Rinha\Entities\Transacao;
 use Rinha\Entities\TransacaoDTO;
@@ -93,6 +94,25 @@ class MysqlContext implements IDatabaseStrategy
                 }
             }
             return $transacoes;
+        });
+    }
+
+    /** @return PromiseInterface<?ConfirmacaoTransacao> **/
+    public function updateSaldo(Conta $conta, int $valor): PromiseInterface
+    {
+        return $this->dbContext->query(
+            'UPDATE contas
+             SET saldo = ?
+             WHERE id = ?',
+            [ $valor, $conta->id ]
+        )->then( function (QueryResult $result) use ($conta, $valor) {
+            if ($result->affectedRows !== 1) {
+                return null;
+            }
+            return new ConfirmacaoTransacao(
+                $conta->limite,
+                $valor
+            );
         });
     }
 

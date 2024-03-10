@@ -4,6 +4,7 @@ namespace Rinha\Database;
 
 use React\Promise\PromiseInterface;
 use Rinha\Database\Interfaces\IDatabaseStrategy;
+use Rinha\Entities\ConfirmacaoTransacao;
 use Rinha\Entities\TransacaoDTO;
 use Rinha\Entities\UltimaTransacaoDTO;
 use Rinha\Entities\Conta;
@@ -44,6 +45,14 @@ class DatabaseContext
     {
         return $this->db->lastTenTransactions($contaId)->then(function(array $transacoes) {
             return $transacoes;
+        });
+    }
+
+    /** @return PromiseInterface<?ConfirmacaoTransacao> **/
+    public function updateSaldo(Conta $conta, int $valor): PromiseInterface
+    {
+        return $this->db->updateSaldo($conta, $valor)->then(function(?ConfirmacaoTransacao $confirmacaoTransacao) {
+            return $confirmacaoTransacao;
         });
     }
 }

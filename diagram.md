@@ -50,15 +50,6 @@ CREATE INDEX idx_conta_transacao ON transacoes (conta_id);
 
 create index idx_transacao on transacoes (conta_id, valor, tipo, descricao, realizada_em);
 
-CREATE TRIGGER ins_transacao AFTER INSERT ON transacoes
-FOR EACH ROW
-BEGIN
-  UPDATE contas
-  SET saldo = saldo + (NEW.valor * (CASE WHEN NEW.tipo = 'd' THEN -1 ELSE 1 END))
-  WHERE id = NEW.conta_id;
-END;
-
-
 DELETE from contas WHERE id >= 1;
 
 insert into contas (id, cliente_id, limite, saldo)

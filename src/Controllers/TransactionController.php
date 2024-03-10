@@ -5,8 +5,10 @@ namespace Rinha\Controllers;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
-use React\Promise\Deferred;
+use React\EventLoop\Loop;
+use React\Promise\Promise;
 use React\Promise\PromiseInterface;
+use Rinha\Entities\ConfirmacaoTransacao;
 use Rinha\Entities\Conta;
 use Rinha\Entities\Transacao;
 use Rinha\Entities\TransacaoDTO;
@@ -30,22 +32,21 @@ class TransactionController
         $data = json_decode((string) $request->getBody());
 
         if($data === null) {
-            $deferred = new Deferred();
-            $promise = $deferred->promise();
-            $jsonError = json_last_error_msg();
-            $promise = $promise->then(function () use ($jsonError) {
-                return Response::plaintext(
-                    "JSON Error: $jsonError\n"
-                )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
+            return new Promise(function ($resolve) {
+                Loop::addTimer(0.01, function () use ($resolve) {
+                    $jsonError = json_last_error_msg();
+                    $resolve(Response::plaintext("JSON Error: $jsonError\n")
+                        ->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY)
+                    );
+                });
             });
-            $deferred->resolve(null);
-            return $promise;
         }
 
         $id = $request->getAttribute('id');
         return $this->getContaByClienteId($id, $data);
     }
 
+    /** @return PromiseInterface<ResponseInterface> **/
     private function getContaByClienteId(int $id, object $data): PromiseInterface
     {
         return $this->contaService->getContaByClienteId($id)->then(
@@ -69,6 +70,7 @@ class TransactionController
         );
     }
 
+    /** @return PromiseInterface<ResponseInterface> **/
     private function criarTransacao(Conta $conta, TransacaoDTO $transacaoDTO): PromiseInterface
     {
         return $this->transacaoService->create($conta, $transacaoDTO)->then(
@@ -81,11 +83,24 @@ class TransactionController
 
                 $saldoAtual = $conta->getSaldo();
                 $valorTransacao = $transacao->valor * ($transacao->tipo === 'd' ? -1 : 1);
-                $conta->setSaldo($saldoAtual + $valorTransacao);
+                $novoSaldo = ($saldoAtual + $valorTransacao);
 
-                return Response::json(
-                    ['limite' => $conta->limite, 'saldo' => $conta->getSaldo()]
-                );
+                return $this->updateSaldo($conta, $novoSaldo);
+            }
+        );
+    }
+
+    /** @return PromiseInterface<ResponseInterface> **/
+    private function updateSaldo(Conta $conta, int $valor): PromiseInterface
+    {
+        return $this->contaService->updateSaldo($conta, $valor)->then(
+            function (?ConfirmacaoTransacao $confirmacaoTransacao) {
+                if ($confirmacaoTransacao === null) {
+                    return Response::plaintext(
+                        "Erro ao atualizar o saldo\n"
+                    )->withStatus(Response::STATUS_UNPROCESSABLE_ENTITY);
+                }
+                return Response::json($confirmacaoTransacao)->withStatus(Response::STATUS_OK);
             }
         );
     }

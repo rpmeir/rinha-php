@@ -105,4 +105,23 @@ class SqliteContext implements IDatabaseStrategy
         });
     }
 
+    /** @return PromiseInterface<?Conta> **/
+    public function updateSaldo(Conta $conta, int $valor): PromiseInterface
+    {
+        return $this->dbContext->query(
+            'UPDATE contas
+             SET saldo = saldo + ?
+             WHERE id = ?',
+            [ $valor, $conta->id ]
+        )->then( function (Result $result) use ($conta) {
+            if ($result->changed === 0) {
+                return null;
+            }
+            return $conta;
+        }, function (\Exception $error) {
+            // the query was not executed successfully
+            echo 'Error on update saldo: ' . $error->getMessage() . PHP_EOL;
+        });
+    }
+
 }
