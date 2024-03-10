@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d94108dfb931e31f6352123c859500cc",
+    "content-hash": "a08786321a054254d9f4510469d59429",
     "packages": [
         {
             "name": "clue/framework-x",
@@ -1454,6 +1454,74 @@
             "time": "2023-06-16T10:52:11+00:00"
         },
         {
+            "name": "reactivex/rxphp",
+            "version": "2.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ReactiveX/RxPHP.git",
+                "reference": "eee8eb20ec310632d0356ff1bcaccf5c90094ba6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ReactiveX/RxPHP/zipball/eee8eb20ec310632d0356ff1bcaccf5c90094ba6",
+                "reference": "eee8eb20ec310632d0356ff1bcaccf5c90094ba6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "react/promise": "^3 || ~2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5 || ^9",
+                "react/event-loop": "^1.0 || ^0.5 || ^0.4.2",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "suggest": {
+                "react/event-loop": "Used for scheduling async operations"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rx\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander",
+                    "email": "iam.asm89@gmail.com"
+                },
+                {
+                    "name": "David Dan",
+                    "email": "davidwdan@gmail.com"
+                },
+                {
+                    "name": "Matt Bonneau",
+                    "email": "matt@bonneau.net"
+                }
+            ],
+            "description": "Reactive extensions for php.",
+            "homepage": "https://github.com/ReactiveX/RxPHP",
+            "keywords": [
+                "extensions",
+                "reactive",
+                "rx"
+            ],
+            "support": {
+                "issues": "https://github.com/ReactiveX/RxPHP/issues",
+                "source": "https://github.com/ReactiveX/RxPHP/tree/2.0.12"
+            },
+            "time": "2023-11-27T16:37:30+00:00"
+        },
+        {
             "name": "ringcentral/psr7",
             "version": "1.3.0",
             "source": {
@@ -1836,6 +1904,130 @@
                 }
             ],
             "time": "2023-11-12T22:43:29+00:00"
+        },
+        {
+            "name": "voryx/event-loop",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voryx/event-loop.git",
+                "reference": "9a55c228b930acdabc023f9a1ba5a347d30a1f77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voryx/event-loop/zipball/9a55c228b930acdabc023f9a1ba5a347d30a1f77",
+                "reference": "9a55c228b930acdabc023f9a1ba5a347d30a1f77",
+                "shasum": ""
+            },
+            "require": {
+                "react/event-loop": "^1.0 || ^0.5 || ^0.4.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5 | ^8"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php",
+                    "src/bootstrap.php"
+                ],
+                "psr-4": {
+                    "EventLoop\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Bonneau",
+                    "email": "matt@bonneau.net",
+                    "role": "Developer"
+                },
+                {
+                    "name": "David Dan",
+                    "email": "davidwdan@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Global static wrapper for react event-loop",
+            "keywords": [
+                "event-loop",
+                "eventloop",
+                "global",
+                "static",
+                "timer"
+            ],
+            "support": {
+                "issues": "https://github.com/voryx/event-loop/issues",
+                "source": "https://github.com/voryx/event-loop/tree/3.0.2"
+            },
+            "time": "2021-10-21T13:43:50+00:00"
+        },
+        {
+            "name": "voryx/pgasync",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voryx/PgAsync.git",
+                "reference": "8c0ce4c9e4c6c5387714c0deaf3ab4aad0ee9518"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voryx/PgAsync/zipball/8c0ce4c9e4c6c5387714c0deaf3ab4aad0ee9518",
+                "reference": "8c0ce4c9e4c6c5387714c0deaf3ab4aad0ee9518",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^2.0 | ^3.0",
+                "php": ">=7.0.0",
+                "react/socket": "^1.0 || ^0.8 || ^0.7",
+                "reactivex/rxphp": "^2.0",
+                "voryx/event-loop": "^3.0 || ^2.0.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=8.5.23 || ^6.5.5",
+                "react/dns": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PgAsync\\": "src/PgAsync/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Bonneau",
+                    "email": "matt@bonneau.net",
+                    "role": "Developer"
+                },
+                {
+                    "name": "David Dan",
+                    "email": "davidwdan@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Async Reactive Postgres Driver for PHP (Non-blocking)",
+            "keywords": [
+                "async",
+                "driver",
+                "pgsql",
+                "postgres",
+                "postgresql",
+                "react",
+                "reactive",
+                "rx.php"
+            ],
+            "support": {
+                "issues": "https://github.com/voryx/PgAsync/issues",
+                "source": "https://github.com/voryx/PgAsync/tree/2.0.6"
+            },
+            "time": "2023-08-22T11:58:09+00:00"
         }
     ],
     "packages-dev": [

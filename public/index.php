@@ -1,6 +1,7 @@
 <?php
 
 use Rinha\Config\DependencyInjection;
+use React\Http\Message\Response;
 use Rinha\Controllers\ExtractController;
 use Rinha\Controllers\TransactionController;
 
@@ -13,6 +14,11 @@ $container = new DependencyInjection();
 
 $app = new FrameworkX\App($container->getContainer());
 
+$app->get('/', function () {
+    return Response::plaintext(
+        "Rinha com Async PHP!\n"
+    );
+});
 $app->post('/clientes/{id:\d+}/transacoes', TransactionController::class);
 $app->get('/clientes/{id:\d+}/extrato', ExtractController::class);
 
