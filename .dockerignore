@@ -1,7 +1,3 @@
-/vendor/
-.phpunit.result.cache
-.env
-src/Database/rinha.db
 src/Database/InMemoryContext.php
 src/Database/PgsqlContext.php
 src/Middlewares/TransactionValidatorMiddleware.php
